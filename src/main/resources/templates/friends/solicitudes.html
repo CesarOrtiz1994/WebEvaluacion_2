@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MindNet</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+    </head>
+    <body>
+        <div data-th-replace="~{fragments/menu :: menu}">...</div>
+
+        <br />
+        <br />
+        <div class="container">
+            <div class="row">
+                <div class="col-6 text-center">
+                    <h1>Solicitudes de amistad</h1>
+                </div>
+                <div class="col-6 text-center">
+                    <h1>Buscar usuario</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 align-self-center mt-4">
+                    <div class="card mt-3" data-th-each="soli : ${solicitudes}">
+                        <div class="card-header">
+                            Solicitud de amistad de:
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-1">
+                                    <img class="img-perfil" data-th-src="@{'/img/' + ${soli.userEnvia.foto}}" data-th-alt="${soli.userEnvia.foto}">
+                                </div>
+                                <div class="col">
+                                    <h5 class="card-title" data-th-text="${soli.userEnvia.nombres}+' '+${soli.userEnvia.apellidos}"></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-4">
+                                    <form data-th-action="@{/solicitudes/aceptar}" method="post" >
+                                        <input type="hidden" id="idSol" name="idSol" data-th-value="${soli.id}" />
+                                        <input type="hidden" id="user1" name="user1" data-th-value="${soli.userRecibe}" />
+                                        <input type="hidden" id="user2" name="user2" data-th-value="${soli.userEnvia.correo}" />
+                                        <input type="hidden" id="nombre2" name="nombre2" data-th-value="${soli.userEnvia.nombres}+' '+${soli.userEnvia.apellidos}" />
+                                        <button class="btn btn-outline-primary">Aceptar solicitud</button>
+                                    </form>
+                                </div>
+                                <div class="col">
+                                    <form data-th-action="@{/solicitudes/rechazar}" method="post" >
+                                        <input type="hidden" id="id" name="id" data-th-value="${soli.id}" />
+                                        <button class="btn btn-outline-danger">Rechazar solicitud</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="container">
+                        <div class="row ms-5 me-5">
+                            <form class="d-flex" role="search"
+                                  data-th-action="@{/solicitudes/buscar}" method="get" >
+                                <input class="form-control me-2" type="search" placeholder="Buscar por nombre..." aria-label="Buscar"
+                                       id="nombre" name="nombre">
+                                <button class="btn btn-outline-success" type="submit">Buscar</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="container mt-4">
+                        <div class="row">
+                            <div class="card mt-3" data-th-each="usu : ${usuarios}">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <img class="img-perfil" data-th-src="@{'/img/' + ${usu.foto}}" data-th-alt="${usu.foto}">
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="card-title" data-th-text="${usu.nombres}+' '+${usu.apellidos}"></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <form data-th-action="@{/solicitudes/mandar-solicitud}" method="post" >
+                                        <input type="hidden" id="userRecibe" name="userRecibe" data-th-value="${usu.correo}" />
+                                        <button class="btn btn-outline-primary">Enviar solicitud</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+            </div>
+        </div>
+
+        <div data-th-replace="~{fragments/footer :: footer}">...</div>
+    </body>
+</html>

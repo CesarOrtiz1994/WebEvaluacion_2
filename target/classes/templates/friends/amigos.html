@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MindNet</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+    </head>
+    <body>
+        <div data-th-replace="~{fragments/menu :: menu}">...</div>
+
+        <br />
+        <br />
+        <div class="container">
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <h1>Mis Amigos</h1>
+                </div>
+                <div class="col-3"></div>
+                <div class="col-3"></div>
+                <div class="col-6 align-self-center mt-4">
+                    <div class="card mt-3" data-th-each="amg : ${amigos}">
+                        <div class="card-header">
+                            Mi compa...
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-1">
+                                    <img class="img-perfil" data-th-src="@{'/img/' + ${amg.userB.foto}}" data-th-alt="${amg.userB.foto}">
+                                </div>
+                                <div class="col">
+                                    <h5 class="card-title" data-th-text="${amg.userB.nombres}+' '+${amg.userB.apellidos}"></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <form data-th-action="@{/amigos/eliminar}" method="post" >
+                                <input type="hidden" id="usera" name="usera" data-th-value="${amg.userA}" />
+                                <input type="hidden" id="userb" name="userb" data-th-value="${amg.userB.correo}" />
+                                <button class="btn btn-outline-danger">Eliminar amigo</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col"></div>
+                <br />
+                <br />
+            </div>
+        </div>
+
+        <div data-th-replace="~{fragments/footer :: footer}">...</div>
+    </body>
+</html>

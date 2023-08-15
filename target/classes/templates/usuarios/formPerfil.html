@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MindNet</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+    </head>
+    <body>
+        <!-- fragmento de menu -->
+        <div data-th-replace="~{fragments/menu :: menu}">...</div>
+
+        <div class="container">
+            <div class="container mt-4">
+                <h1 data-th-text="${tituloOper}"></h1>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end" data-th-if="${operacion} == 'perfil'">
+                <a class="btn btn-outline-danger" data-th-href="@{/}">
+                    Cancelar
+                </a>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end" data-th-if="${operacion} != 'perfil'">
+                <a class="btn btn-outline-danger" data-th-href="@{/usuarios/}">
+                    Cancelar
+                </a>
+            </div>
+            <br />
+            <div class="me-5 ms-5">
+                <div class="card card-body">
+                    <form data-th-action="@{/perfil/guardar}" 
+                          data-th-object="${usuario}" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" id="operacion" name="operacion" data-th-value="${operacion}" />
+                        <input type="hidden" id="foto" name="foto" data-th-field="*{foto}" />
+                        <div class="row g-3 align-items-center">
+                            <div class="col-sm-4">
+                                <!--nombres-->
+                                <div class="col-auto">
+                                    <label for="foto" class="col-form-label">Foto de perfil</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input class="form-control" type="file" name="imageFoto" id="imageFoto" accept=".png,.jpg,.jpeg">
+                                </div>
+                                <div class="col-auto">
+                                    <span id="nombreHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('foto')}"
+                                          data-th-errors="*{foto}">Error nombre</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--nombres-->
+                                <div class="col-auto">
+                                    <label for="nombres" class="col-form-label">* Nombre(s)</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" id="nombres" class="form-control" 
+                                           aria-labelledby="nombreHelpInline" data-th-field="*{nombres}">
+                                </div>
+                                <div class="col-auto">
+                                    <span id="nombreHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('nombres')}"
+                                          data-th-errors="*{nombres}">Error nombre</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--apellidos-->
+                                <div class="col-auto">
+                                    <label for="apellidos" class="col-form-label">* Apellido(s)</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" id="apellidos" class="form-control" 
+                                           aria-labelledby="nombreHelpInline" data-th-field="*{apellidos}">
+                                </div>
+                                <div class="col-auto">
+                                    <span id="nombreHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('apellidos')}"
+                                          data-th-errors="*{apellidos}">Error apellidos</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--correo-->
+                                <div class="col-auto">
+                                    <label for="correo" class="col-form-label">* Correo</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" id="correo" class="form-control" 
+                                           aria-labelledby="correoHelpInline" data-th-field="*{correo}" readonly>
+                                </div>
+                                <div class="col-auto">
+                                    <span id="correoHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('correo')}"
+                                          data-th-errors="*{correo}">Error correo</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--contraseña-->
+                                <div class="col-auto">
+                                    <label for="password" class="col-form-label">* Contraseña</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="password" id="password" class="form-control" 
+                                           aria-labelledby="passHelpInline" data-th-field="*{password}">
+                                </div>
+                                <div class="col-auto">
+                                    <span id="passHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('password')}"
+                                          data-th-errors="*{password}">Error pass</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--fecha de nacimiento-->
+                                <div class="col-auto">
+                                    <label for="fechaNac" class="form-label">* Fecha de nacimiento</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="date" class="form-control" id="fechaNac" data-th-max="${#temporals.format(#temporals.createNow().minusYears(18),'yyyy-MM-dd')}"
+                                           aria-labelledby="passHelpInline" data-th-field="*{fechaNac}">
+                                </div>
+                                <div class="col-auto">
+                                    <span id="passHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('fechaNac')}"
+                                          data-th-errors="*{fechaNac}" >Error fechaNac</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--pregunta secreta-->
+                                <div class="col-auto">
+                                    <label for="question" class="form-label">* Pregunta secreta</label>
+                                </div>
+                                <div class="col-auto">
+                                    <select class="form-select form-control" aria-label="visibilidad"
+                                            id="question" name="question" data-th-field="*{question}">
+                                        <option value="" selected="">Selecciona una pregunta</option>
+                                        <option value="¿Cuál es el nombre de tu primera mascota?">¿Cuál es el nombre de tu primera mascota?</option>
+                                        <option value="¿Cuál es el nombre de tu película favorita?">¿Cuál es el nombre de tu película favorita?</option>
+                                        <option value="¿Cuál es tu color favorito?">¿Cuál es tu color favorito?</option>
+                                        <option value="¿Cuál es el nombre de tu primer amor?">¿Cuál es el nombre de tu primer amor?</option>
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    <span id="nameHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('question')}"
+                                          data-th-errors="*{question}">Error question</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--respuesta secreta-->
+                                <div class="col-auto">
+                                    <label for="secretQuestion" class="form-label">* Respuesta secreta</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" class="form-control" id="secretQuestion" placeholder="Respuesta"
+                                           aria-labelledby="nameHelpInline" data-th-field="*{secretQuestion}">
+                                </div>
+                                <div class="col-auto">
+                                    <span id="nameHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('secretQuestion')}"
+                                          data-th-errors="*{secretQuestion}">Error secretQuestion</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--Carrera-->
+                                <div class="col-auto">
+                                    <label for="carrera" class="form-label">Carrera</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" class="form-control" id="carrera" placeholder="Carrera"
+                                           aria-labelledby="carreraHelpInline" data-th-field="*{carrera}">
+                                </div>
+                                <div class="col-auto">
+                                    <span id="carreraHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('carrera')}"
+                                          data-th-errors="*{carrera}">Error carrera</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--prepa-->
+                                <div class="col-auto">
+                                    <label for="prepa" class="form-label">Preparatoria cursada</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" class="form-control" id="prepa" placeholder="Preparatoria cursada"
+                                           aria-labelledby="prepaHelpInline" data-th-field="*{prepa}">
+                                </div>
+                                <div class="col-auto">
+                                    <span id="prepaHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('prepa')}"
+                                          data-th-errors="*{prepa}">Error prepa</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--trabaja-->
+                                <div class="col-auto">
+                                    <label for="trabaja" class="form-label">¿Trabaja?</label>
+                                </div>
+                                <div class="col-auto">
+                                    <select class="form-select form-control" aria-label="visibilidad"
+                                            id="trabaja" name="trabaja" data-th-field="*{trabaja}">
+                                        <option value="" selected="">Selecciona una opción</option>
+                                        <option value="Si">Si</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    <span id="prepaHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('trabaja')}"
+                                          data-th-errors="*{trabaja}">Error trabaja</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--empresa-->
+                                <div class="col-auto">
+                                    <label for="empresa" class="form-label">Empresa o lugar de trabajo</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" class="form-control" id="empresa" placeholder="Empresa o lugar de trabajo"
+                                           aria-labelledby="empresaHelpInline" data-th-field="*{empresa}">
+                                </div>
+                                <div class="col-auto">
+                                    <span id="empresaHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('empresa')}"
+                                          data-th-errors="*{empresa}">Error empresa</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--lugarNac-->
+                                <div class="col-auto">
+                                    <label for="lugarNac" class="form-label">Lugar de nacimiento</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" class="form-control" id="lugarNac" placeholder="Lugar de nacimiento"
+                                           aria-labelledby="lugarNacHelpInline" data-th-field="*{lugarNac}">
+                                </div>
+                                <div class="col-auto">
+                                    <span id="lugarNacHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('lugarNac')}"
+                                          data-th-errors="*{lugarNac}">Error lugarNac</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--sitSentimental-->
+                                <div class="col-auto">
+                                    <label for="sitSentimental" class="form-label">Situación sentimental</label>
+                                </div>
+                                <div class="col-auto">
+                                    <select class="form-select form-control" aria-label="sitSentimental"
+                                            id="sitSentimental" name="sitSentimental" data-th-field="*{sitSentimental}">
+                                        <option value="" selected="">Selecciona una opción</option>
+                                        <option value="Soltero">Soltero</option>
+                                        <option value="Casado">Casado</option>
+                                        <option value="Divorciado">Divorciado</option>
+                                        <option value="Viudo">Viudo</option>
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('sitSentimental')}"
+                                          data-th-errors="*{sitSentimental}">Error question</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <!--gustos-->
+                                <div class="col-auto">
+                                    <label for="gustos" class="form-label">Gustos</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" id="gustos" placeholder="Gustos..."
+                                              aria-labelledby="gustosHelpInline" data-th-field="*{gustos}"></textarea>
+                                </div>
+                                <div class="col-auto">
+                                    <span id="gustosHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('gustos')}"
+                                          data-th-errors="*{gustos}">Error gustos</span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <!--boton-->
+                                <div class="col-auto">
+                                    <button class="btn btn-success" type="submit" data-th-text="${textBtn}">...</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <br />
+                <br />
+            </div>
+        </div>
+
+        <div data-th-replace="~{fragments/footer :: footer}">...</div>
+
+    </body>
+</html>

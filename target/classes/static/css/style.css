@@ -1,0 +1,16 @@
+
+.img-perfil {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+.img-ver-perfil {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+.links-clean {
+    text-decoration: none;
+}

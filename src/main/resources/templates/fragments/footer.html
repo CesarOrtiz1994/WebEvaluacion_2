@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    </head>
+    <body>
+        <footer data-th-fragment="footer">
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalPerfil" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="perfilModalLabel">Perfil</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img class="img-ver-perfil me-2" id='perf-foto'>
+                            <br />
+                            <br />
+                            <strong class="me-auto">Nombre(s):</strong>
+                            <small id='perf-nombres'></small>
+                            <br />
+                            <strong class="me-auto">Apellido(s):</strong>
+                            <small id='perf-apellidos'></small>
+                            <br />
+                            <strong class="me-auto">Correo:</strong>
+                            <small id='perf-correo'></small>
+                            <br />
+                            <strong class="me-auto">Fecha de nacimiento:</strong>
+                            <small id='perf-fechaNac'></small>
+                            <br />
+                            <strong class="me-auto">Carrera:</strong>
+                            <small id='perf-carrera'></small>
+                            <br />
+                            <strong class="me-auto">Preparatoria cursada:</strong>
+                            <small id='perf-prepa'></small>
+                            <br />
+                            <strong class="me-auto">Trabaja:</strong>
+                            <small id='perf-trabaja'></small>
+                            <br />
+                            <strong class="me-auto">Lugar de nacimiento:</strong>
+                            <small id='perf-lugarNac'></small>
+                            <br />
+                            <strong class="me-auto">Situación sentimental:</strong>
+                            <small id='perf-sitSentimental'></small>
+                            <br />
+                            <strong class="me-auto">Gustos:</strong>
+                            <small id='perf-gustos'></small>
+                        </div>
+                        <div class="modal-footer" id="footerModal">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--toast de soliciyudes-->
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+                     data-th-each="notifi : ${notificaciones}">
+                    <div class="toast-header">
+                        <img data-th-src="@{'/img/' + ${notifi.userEnvia.foto}}" class="img-perfil rounded me-2" alt="${notifi.userEnvia.foto}">
+                        <strong class="me-auto" data-th-text="${notifi.userEnvia.nombres}+' '+${notifi.userEnvia.apellidos}"></strong>
+                        <small>Nueva solicitud...</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body" data-th-text="${notifi.userEnvia.nombres}+' te ha mandado una solicitud de amistad.'"></div>
+                </div>
+            </div>
+
+            <!--para obtener los datos de sesion como variable-->
+            <!--${authentication.name} o ${authentication.principal.campo_objUsuario}-->
+            <!--<h5 data-th-text='${authentication.name}'></h5>-->
+            <!--data-th-if="${#authentication.name} == ${comment.userCorreo} or ${#authentication.hasRole('ROLE_MAESTRO')}"-->
+
+            <!--para validar directamente con sesion-->
+            <!--            <div data-sec-authorize="isAuthenticated()">
+                            <br>Usuario: <span data-sec-authentication="name">Usuario logeado</span>
+                            <br>Roles: <span data-sec-authentication="principal.authorities">Roles</span>
+                        </div>-->
+            <!--<h5 data-sec-authentication="principal"></h5>-->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+            <script src="/js/scripts.js"></script>
+            <script data-th-src="@{/js/perfil.js(${#authentication.name})}"></script>
+        </footer>
+    </body>
+</html>
