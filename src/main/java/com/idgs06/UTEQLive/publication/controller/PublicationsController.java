@@ -210,10 +210,34 @@ public class PublicationsController {
         if(!usuario.isEnabled()) {
             usuario.setEnabled(true);
         }
-        
-        if (usuario.getPassword().equals("")) {
-            usuario.setPassword(user.getPassword());
+        if(usuario.getCarrera().equals("")) {
+            usuario.setCarrera(user.getCarrera());
         }
+        if(usuario.getEmpresa().equals("")) {
+            usuario.setEmpresa(user.getEmpresa());
+        }
+        if(usuario.getFechaNac().equals("")) {
+            usuario.setFechaNac(user.getFechaNac());
+        }
+        usuario.setFoto(user.getFoto());
+        if(usuario.getGustos().equals("")) {
+            usuario.setGustos(user.getGustos());
+        }
+        if(usuario.getLugarNac().equals("")) {
+            usuario.setLugarNac(user.getLugarNac());
+        }
+        if(usuario.getPrepa().equals("")) {
+            usuario.setPrepa(user.getPrepa());
+        }
+        usuario.setQuestion(user.getQuestion());
+        usuario.setSecretQuestion(user.getSecretQuestion());
+        if(usuario.getSitSentimental() == null) {
+            usuario.setSitSentimental(user.getSitSentimental());
+        }
+        if(usuario.getTrabaja() == null) {
+            usuario.setTrabaja(user.getTrabaja());
+        }
+        usuario.setPassword(user.getPassword());
         if (results.hasErrors()) {
             System.out.println("Error: " + results.getAllErrors());
             model.addAttribute("tituloOper", "Editar perfil");

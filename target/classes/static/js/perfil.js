@@ -46,9 +46,9 @@ async function verPerfil(correo) {
                 document.getElementById('nombres').value = perfil.nombres;
                 document.getElementById('apellidos').value = perfil.apellidos;
                 document.getElementById('correo').value = perfil.correo;
-                document.getElementById('fechaNac').innerHTML = perfil.fechaNac;
-                document.getElementById('carrera').innerHTML = perfil.carrera;
-                document.getElementById('prepa').innerHTML = perfil.prepa;
+                document.getElementById('fechaNac').value = perfil.fechaNac;
+                document.getElementById('carrera').value = perfil.carrera;
+                document.getElementById('prepa').value = perfil.prepa;
                 if (perfil.trabaja === "Si") {
                     document.getElementById('trabaja').innerHTML = `${perfil.trabaja}<br />
                             <strong class="me-auto">Empresa o lugar de trabajo:</strong>
@@ -58,7 +58,7 @@ async function verPerfil(correo) {
                 }
                 document.getElementById('lugarNac').innerHTML = perfil.lugarNac;
                 document.getElementById('sitSentimental').innerHTML = perfil.sitSentimental;
-                document.getElementById('gustos').innerHTML = perfil.gustos;
+                document.getElementById('gustos').value = perfil.gustos;
 
                 if (perfil.correo == correo) {
                     footerModal.innerHTML = `<a class="btn btn-outline-primary" href="/perfil/editar">Editar</a>
