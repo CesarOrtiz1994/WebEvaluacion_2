@@ -22,31 +22,54 @@
 
             <div class="container text-center">
                 <div class="card">
-                    <form>
-                    <div class="row">
-                        <div class="col-5 p-5 border-end">
-                            <img class="img-ver-perfil me-2" id='perf-foto'>
-
-                            <div class="input-group mb-3">
-                                <label class="input-group-text" for="imageFoto"><i class="fa-regular fa-image"></i></label>
-                                <input type="file" class="form-control" name="imageFoto" id="imageFoto" accept=".png,.jpg,.jpeg">
+                    <form data-th-action="@{/perfil/guardarphoto}" data-th-object="${usuario}" method="POST" enctype="multipart/form-data" id="postFotoForm">
+                        <!-- Photo and names section -->
+                        <div class="row g-3 align-items-center">
+                            <div class="col-5 p-5">
+                                <!-- Profile image -->
+                                <img class="img-ver-perfil me-2" id='perf-foto'>
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="imageFoto"><i class="fa-regular fa-image"></i></label>
+                                    <input type="file" class="form-control" name="imageFoto" id="imageFoto" accept=".png,.jpg,.jpeg">
+                                </div>
+                                <button class="btn btn-primary" type="submit">Guardar Cambios</button>
                             </div>
-
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-                                <input type="text" id='nombres' class="form-control" placeholder="Username" aria-label="Nombres" aria-describedby="basic-addon1">
-                            </div>
-
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-                                <input type="text" id='apellidos' class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                            </div>
-
                         </div>
-                        <div class="col-7">.col-6<br>Subsequent columns continue along the new line.</div>
-                    </div>
-                </form>
+                    </form>
+                    <form>
+                        <div class="row">
+                            <div class="col-5 p-5 border-end">
+                                <img class="img-ver-perfil me-2" id='perf-foto1'>
 
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="imageFoto1"><i class="fa-regular fa-image"></i></label>
+                                    <input type="file" class="form-control" name="imageFoto" id="imageFoto1" accept=".png,.jpg,.jpeg">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                    <input type="text" id='nombres' class="form-control" placeholder="Nombre" aria-label="Nombres" aria-describedby="basic-addon1">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                    <input type="text" id='apellidos' class="form-control" placeholder="Apellidos" aria-label="Apellidos" aria-describedby="basic-addon1">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                                    <input type="text" id='correo' class="form-control" placeholder="correo" aria-label="Correo" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+
+                            <div class="col-7">.col-6<br>Subsequen columns continue along the new line.
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                                    <input type="text" id='fechaNac' class="form-control" placeholder="fechaNac" aria-label="fechaNac" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -105,7 +128,7 @@
                                     <label for="correo" class="col-form-label">* Correo</label>
                                 </div>
                                 <div class="col-auto">
-                                    <input type="text" id="correo" class="form-control" 
+                                    <input type="text" id="correo1" class="form-control"
                                            aria-labelledby="correoHelpInline" data-th-field="*{correo}" readonly>
                                 </div>
                                 <div class="col-auto">
@@ -133,7 +156,7 @@
                                     <label for="fechaNac" class="form-label">* Fecha de nacimiento</label>
                                 </div>
                                 <div class="col-auto">
-                                    <input type="date" class="form-control" id="fechaNac" data-th-max="${#temporals.format(#temporals.createNow().minusYears(18),'yyyy-MM-dd')}"
+                                    <input type="date" class="form-control" id="fechaNac1" data-th-max="${#temporals.format(#temporals.createNow().minusYears(18),'yyyy-MM-dd')}"
                                            aria-labelledby="passHelpInline" data-th-field="*{fechaNac}">
                                 </div>
                                 <div class="col-auto">

@@ -5,6 +5,32 @@ window.addEventListener('load', function() {
     verPerfil(userName);
 });
 
+//get img
+document.getElementById('postFotoForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    let api_url = "http://localhost:8080";
+    let formData = new FormData(document.getElementById('postFotoForm'));
+    let img = document.getElementById('perf-foto');
+    console.log('intento subir imagen');
+    try {
+        const res = await fetch(`${api_url}/perfil/guardarFoto`, {
+            method: 'POST',
+            body: formData
+        })
+        if (res.ok) {
+            console.log("Image uploaded successfully");
+            img.src = '/img/' + res.body;
+            window.location.reload();
+
+            // Handle any further actions if needed
+        } else {
+            console.log("Image upload failed");
+            // Handle the error condition
+        }
+    } catch (err) {
+        console.error(err);
+    }
+})
 
 async function verPerfil(correo) {
     let api_url = "http://localhost:8080";
@@ -19,8 +45,8 @@ async function verPerfil(correo) {
                 imagen.alt = '/img/' + perfil.foto;
                 document.getElementById('nombres').value = perfil.nombres;
                 document.getElementById('apellidos').value = perfil.apellidos;
-                document.getElementById('perf-correo').value = perfil.correo;
-                document.getElementById('perf-fechaNac').innerHTML = perfil.fechaNac;
+                document.getElementById('correo').value = perfil.correo;
+                document.getElementById('fechaNac').innerHTML = perfil.fechaNac;
                 document.getElementById('perf-carrera').innerHTML = perfil.carrera;
                 document.getElementById('perf-prepa').innerHTML = perfil.prepa;
                 if (perfil.trabaja === "Si") {

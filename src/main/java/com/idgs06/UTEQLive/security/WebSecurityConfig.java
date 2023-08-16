@@ -55,6 +55,8 @@ public class WebSecurityConfig {
                             .requestMatchers("/usuarios/").hasAnyRole("ADMIN", "MAESTRO")
                             .requestMatchers("/usuarios/**").hasRole("ADMIN")
                             .requestMatchers("/resources/**").permitAll()
+                            .requestMatchers("/static/**").permitAll()
+                            .requestMatchers("/img/**").permitAll()
                             .anyRequest().authenticated();
                 }
                 )

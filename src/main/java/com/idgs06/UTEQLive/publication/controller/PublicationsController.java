@@ -17,15 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
@@ -40,6 +41,8 @@ public class PublicationsController {
     private IComentarioService comentService;
     @Autowired
     private ISolicitudesService soliService;
+    @Autowired
+    private FilesUtils filesUtils;
 
     @GetMapping("/")
     public String page(Model model) {
@@ -229,6 +232,64 @@ public class PublicationsController {
         }
         userService.save(usuario, imageFoto, rolUser);
         return "redirect:/";
+    }
+
+    @PostMapping("/perfil/guardarFoto")
+    public ResponseEntity<?> guardarFoto(@RequestParam("imageFoto") MultipartFile imageFoto) throws Exception {
+        try {
+            System.out.println("foto = " + imageFoto.getOriginalFilename());
+            System.out.println("Entro");
+
+            List<MultipartFile> files = new ArrayList<>();
+            files.add(imageFoto);
+
+            if(imageFoto.isEmpty()){
+                System.out.println("No hay imagen");
+                return new ResponseEntity<>("No hay imagen", HttpStatus.BAD_REQUEST);
+            }
+
+            if (!FilesUtils.validaExtensionesImagenes(files)) {
+                System.out.println("No es imagen");
+                return new ResponseEntity<>("Invalid image extension", HttpStatus.BAD_REQUEST);
+            }
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Usuario user = userService.findByCorreo(authentication.getName());
+
+            // Save the image using the FilesUtils class
+            String imagePath = filesUtils.saveImgPerfil(imageFoto, user.getCorreo());
+
+            // You can use the imagePath as needed, e.g., saving it to the user's profile
+            user.setFoto(imagePath);
+            String rolUser = "";
+            for (Rol rol : user.getAuthorities()) {
+                switch (rol.getAuthority()) {
+                    case "ROLE_ADMIN":
+                        rolUser = "Admin";
+                        break;
+                    case "ROLE_MAESTRO":
+                        rolUser = "Maestro";
+                        break;
+                    default:
+                        rolUser = "Estudiante";
+                        break;
+                }
+            }
+            userService.save(user, imageFoto, rolUser);
+            return new ResponseEntity<>(imagePath, HttpStatus.OK);
+        } catch (Exception e) {
+            // Handle exceptions
+            System.out.println("Error: " + e.getMessage() );
+            return new ResponseEntity<>("Error uploading image: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/img/perfil/{filename:,+}")
+    public ResponseEntity<Resource> getFile(@PathVariable String filename) throws Exception {
+        Resource resource = filesUtils.load(filename);
+        return ResponseEntity.ok().header(
+                HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +
+                        resource.getFilename() + "\"").body(resource);
     }
 
 }

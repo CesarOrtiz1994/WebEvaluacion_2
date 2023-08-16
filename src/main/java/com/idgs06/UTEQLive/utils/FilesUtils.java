@@ -11,8 +11,11 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+@Component
 @Slf4j
 public class FilesUtils {
 
@@ -20,16 +23,26 @@ public class FilesUtils {
     private static final Path rootFolderPerfil = Paths.get("src//main//resources//static//img//perfil");
 
     public static String saveImgPerfil(MultipartFile file, String nombre) throws Exception {
+        if (file == null || file.isEmpty()) {
+            throw new IllegalArgumentException("File is empty or null");
+        }
+
         String originalFilename = file.getOriginalFilename();
         String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
         String newFilename = nombre.replaceFirst("@uteq.edu.mx", "").trim() + extension;
-        Path pathFinal = rootFolderPerfil.resolve(newFilename);
-        if(Files.exists(pathFinal)) {
-            Files.delete(pathFinal);
+
+        try {
+            Path pathFinal = rootFolderPerfil.resolve(newFilename);
+            if (Files.exists(pathFinal)) {
+                Files.delete(pathFinal);
+            }
+            Files.copy(file.getInputStream(), pathFinal);
+
+            Thread.sleep(2000); // espera 2 segundos
+            return "perfil/" + newFilename;
+        } catch (IOException e) {
+            throw new Exception("Error while saving image: " + e.getMessage());
         }
-        Files.copy(file.getInputStream(), pathFinal);
-        Thread.sleep(2000); // espera 2 segundos
-        return "perfil/" + newFilename;
     }
 
     public Imagen saveFile(MultipartFile file) throws Exception {
@@ -70,14 +83,26 @@ public class FilesUtils {
     }
     
     public static void deleteFile(String ruta) {
-        
         Path path = Paths.get("src/main/resources/static/img/"+ruta);
         try {
             Files.delete(path);
         } catch (IOException ex) {
             Logger.getLogger(FilesUtils.class.getName()).log(Level.SEVERE, "Error al intentar eliminar el archivo.", ex);
         }
+    }
 
+    public Resource load (String filename){
+        try {
+            Path file = rootFolderPublics.resolve(filename);
+            Resource resource = new org.springframework.core.io.UrlResource(file.toUri());
+            if(resource.exists() || resource.isReadable()){
+                return resource;
+            }else{
+                throw new RuntimeException("No se puede leer el archivo");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error: " + e.getMessage());
+        }
     }
 
 }

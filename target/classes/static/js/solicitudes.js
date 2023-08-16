@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         } else {
             searchResultsContainer.innerHTML = "";
-            listUsersDiv.style.display = "block";
+            listUsersDiv.style.display = "flex";
         }
     });
 });
