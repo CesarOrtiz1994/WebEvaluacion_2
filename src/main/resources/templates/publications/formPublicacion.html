@@ -67,7 +67,7 @@
                                             <img class="card-img" data-th-src="@{'/img/' + ${img.ruta}}" data-th-alt="${img.ruta}">
                                             <div class="card-img-overlay text-end">
                                                 <form data-th-action="@{/imagen/eliminar}" method="post" data-th-if="${#authentication.name} == ${publication.user.correo} or ${#authentication.hasRole('ROLE_MAESTRO')}">
-                                                    <input type="hidden" id="id" name="id" data-th-value="${img.id}" />
+                                                    <input type="hidden" id="id_img" name="id" data-th-value="${img.id}" />
                                                     <input type="hidden" id="rutaFile" name="rutaFile" data-th-value="${img.ruta}" />
                                                     <input type="hidden" id="idPublicacion" name="idPublicacion" data-th-value="${publication.id}" />
                                                     <button class="btn btn-close btn-outline-danger" aria-label="Eliminar"></button>

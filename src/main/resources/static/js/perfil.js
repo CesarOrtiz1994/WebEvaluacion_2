@@ -1,21 +1,27 @@
-const API_URL = "http://localhost:8080";
+window.addEventListener('load', function() {
+    var script = document.querySelector('script[src^="/js/perfil.js"]'); // obtiene el elemento script que tiene el atributo src que empieza con "/js/perfil.js"
+    var url = script.src; // obtiene el valor del atributo src
+    var userName = url.split('?')[1]; // obtiene la parte después del signo de interrogación
+    verPerfil(userName);
+});
+
 
 async function verPerfil(correo) {
-
+    let api_url = "http://localhost:8080";
     var script = document.querySelector('script[src^="/js/perfil.js"]'); // obtiene el elemento script que tiene el atributo src que empieza con "/js/perfil.js"
-var url = script.src; // obtiene el valor del atributo src
-var userName = url.split('?')[1]; // obtiene la parte después del signo de interrogación
+    var url = script.src; // obtiene el valor del atributo src
+    var userName = url.split('?')[1]; // obtiene la parte después del signo de interrogación
 
     let footerModal = document.getElementById("footerModal");
 
-    await fetch(`${API_URL}/perfil/${correo}`)
+    await fetch(`${api_url}/perfil/${correo}`)
             .then((response) => response.json())
             .then((perfil) => {
                 let imagen = document.getElementById('perf-foto');
                 imagen.src = '/img/' + perfil.foto;
                 imagen.alt = '/img/' + perfil.foto;
-                document.getElementById('perf-nombres').innerHTML = perfil.nombres;
-                document.getElementById('perf-apellidos').innerHTML = perfil.apellidos;
+                document.getElementById('nombres').value = perfil.nombres;
+                document.getElementById('perf-apellidos').value = perfil.apellidos;
                 document.getElementById('perf-correo').innerHTML = perfil.correo;
                 document.getElementById('perf-fechaNac').innerHTML = perfil.fechaNac;
                 document.getElementById('perf-carrera').innerHTML = perfil.carrera;

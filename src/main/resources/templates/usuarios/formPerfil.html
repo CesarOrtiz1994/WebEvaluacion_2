@@ -12,23 +12,46 @@
         <div data-th-replace="~{fragments/menu :: menu}">...</div>
 
         <div class="container">
-            <div class="container mt-4">
-                <h1 data-th-text="${tituloOper}"></h1>
-            </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end" data-th-if="${operacion} == 'perfil'">
-                <a class="btn btn-outline-danger" data-th-href="@{/}">
+            <div class="d-flex justify-content-between mt-3">
+                <h3 data-th-text="${tituloOper}"></h3>
+                <a class="btn btn-danger" data-th-href="@{/}"  data-th-if="${operacion} == 'perfil'">
                     Cancelar
                 </a>
             </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end" data-th-if="${operacion} != 'perfil'">
-                <a class="btn btn-outline-danger" data-th-href="@{/usuarios/}">
-                    Cancelar
-                </a>
+            <hr>
+
+            <div class="container text-center">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-5 p-5">
+                            <img class="img-ver-perfil me-2" id='perf-foto'>
+
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="imageFoto"><i class="fa-regular fa-image"></i></label>
+                                <input type="file" class="form-control" name="imageFoto" id="imageFoto" accept=".png,.jpg,.jpeg">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                <input type="text" id='perf-nombres' class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                <input type="text" id='perf-apellidos' class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+
+                        </div>
+                        <div class="col-7">.col-6<br>Subsequent columns continue along the new line.</div>
+                    </div>
+
+                </div>
             </div>
-            <br />
+
+
             <div class="me-5 ms-5">
                 <div class="card card-body">
-                    <form data-th-action="@{/perfil/guardar}" 
+                    <form data-th-action="@{/perfil/guardar}"
                           data-th-object="${usuario}" method="POST" enctype="multipart/form-data">
                         <input type="hidden" id="operacion" name="operacion" data-th-value="${operacion}" />
                         <input type="hidden" id="foto" name="foto" data-th-field="*{foto}" />
@@ -52,7 +75,7 @@
                                     <label for="nombres" class="col-form-label">* Nombre(s)</label>
                                 </div>
                                 <div class="col-auto">
-                                    <input type="text" id="nombres" class="form-control" 
+                                    <input type="text" id="nombres" class="form-control"
                                            aria-labelledby="nombreHelpInline" data-th-field="*{nombres}">
                                 </div>
                                 <div class="col-auto">
@@ -274,8 +297,9 @@
             </div>
         </div>
 
+        <script data-th-src="@{/js/perfil.js(${#authentication.name})}"></script>
         <div data-th-replace="~{fragments/footer :: footer}">...</div>
-        <div data-th-replace="fragments/script :: script"></div>
+        <div data-th-replace="~{fragments/script :: script}"></div>
 
     </body>
 </html>

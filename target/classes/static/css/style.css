@@ -6,9 +6,10 @@
 }
 
 .img-ver-perfil {
-    height: 200px;
-    width: 200px;
+    height: 180px;
+    width: 180px;
     border-radius: 50%;
+    margin-bottom: 20px;
 }
 
 .links-clean {

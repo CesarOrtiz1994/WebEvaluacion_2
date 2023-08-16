@@ -28,22 +28,18 @@
                                     <span class="input-group-text"><i class="fa-solid fa-at"></i></span>
                                     <input type="email" class="form-control" id="emailUser" placeholder="Correo" required
                                            aria-labelledby="emailHelpInline" data-th-field="*{correo}">
-                                    <span id="emailHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('correo')}"
-                                          data-th-errors="*{correo}">Error email</span>
                                 </div>
+                                <div class="card bg-danger text-white mb-2" data-th-if="#{fields.hasErrors('correo')}"
+                                     data-th-errors="*{correo}">Error email</div>
                                 <div class="input-group flex-nowrap mb-2">
                                     <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
                                     <input type="password" class="form-control" id="password" placeholder="Contraseña" required
                                            aria-labelledby="passHelpInline" data-th-field="*{password}">
-                                    <span id="passHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('password')}"
-                                          data-th-errors="*{password}">Error password</span>
                                 </div>
                                 <div class="input-group flex-nowrap mb-2">
                                     <span class="input-group-text"><i class="fa-solid fa-cake-candles"></i></span>
                                     <input type="date" class="form-control" id="fechaNac" data-th-max="${#temporals.format(#temporals.createNow().minusYears(18),'yyyy-MM-dd')}"
                                            aria-labelledby="passHelpInline" data-th-field="*{fechaNac}" required>
-                                    <span id="passHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('fechaNac')}"
-                                          data-th-errors="*{fechaNac}" >Error fechaNac</span>
                                 </div>
                                 <div class="input-group flex-nowrap mb-2">
                                     <span class="input-group-text"><i class="fa-solid fa-question"></i></span>
@@ -55,15 +51,11 @@
                                         <option value="¿Cuál es tu color favorito?">¿Cuál es tu color favorito?</option>
                                         <option value="¿Cuál es el nombre de tu primer amor?">¿Cuál es el nombre de tu primer amor?</option>
                                     </select>
-                                    <span id="nameHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('question')}"
-                                          data-th-errors="*{question}">Error question</span>
                                 </div>
                                 <div class="input-group flex-nowrap mb-2">
                                     <span class="input-group-text"><i class="fa-solid fa-circle-question"></i></span>
                                     <input type="text" class="form-control" id="secretQuestion" placeholder="Respuesta" required
                                            aria-labelledby="nameHelpInline" data-th-field="*{secretQuestion}">
-                                    <span id="nameHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('secretQuestion')}"
-                                          data-th-errors="*{secretQuestion}">Error secretQuestion</span>
                                 </div>
                                 <div class="d-grid gap-2 mb-3">
                                 <input type="submit" value="Registrar" class="btn  btn-block" style=" background-color: #6c63ff; color: white;">
