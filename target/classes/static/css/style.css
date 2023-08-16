@@ -14,3 +14,11 @@
 .links-clean {
     text-decoration: none;
 }
+
+.bg-morado {
+    background-color: #6c63ff !important;
+}
+
+.bg-morado:hover {
+    background-color: #5a4bd1 !important;
+}

@@ -1,78 +1,79 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-    </head>
-    <body>
         <div data-th-fragment="menu">
             <!-- Barra de navegación -->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="menuTop">
-                <div class="container-fluid">
-                    <a class="navbar-brand" data-th-href="@{/}">MindNet</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <nav class="navbar navbar-dark bg-dark sticky-top">
+                <div class="container-fluid px-5">
+                    <a class="navbar-brand" data-th-href="@{/}">Red UTEQ</a>
+                    <button class="btn position-relative me-4" id="solicitudesToast">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="32" viewBox="0 0 28 32" fill="none" style="width: 25px; height: 25px;">
+                            <path d="M28 25.9048V27.4286H0V25.9048L3.11111 22.8571V13.7143C3.11111 8.99048 6.26889 4.83048 10.8889 3.48952V3.04762C10.8889 2.23934 11.2167 1.46417 11.8001 0.892627C12.3836 0.321087 13.1749 0 14 0C14.8251 0 15.6164 0.321087 16.1999 0.892627C16.7833 1.46417 17.1111 2.23934 17.1111 3.04762V3.48952C21.7311 4.83048 24.8889 8.99048 24.8889 13.7143V22.8571L28 25.9048ZM17.1111 28.9524C17.1111 29.7607 16.7833 30.5358 16.1999 31.1074C15.6164 31.6789 14.8251 32 14 32C13.1749 32 12.3836 31.6789 11.8001 31.1074C11.2167 30.5358 10.8889 29.7607 10.8889 28.9524" fill="white"/>
+                        </svg>
+                        <span class="position-absolute top-0 start-75 translate-middle badge rounded-pill bg-danger"
+                              data-th-if="${numSoli} > 0" data-th-text="${numSoli}"></span>
+                    </button>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-underline">
-                            <li class="nav-item">
-                                <a class="nav-link" data-th-href="@{/}"
-                                   data-th-classappend="${menuActive} == 'inicio' ? ' active' : ''" aria-current="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none" style="width: 40px; height: 40px;">
-                                    <path d="M30 7.5L50 22.5V52.5H37.5V35H22.5V52.5H10V22.5L30 7.5Z" fill="white"/>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-th-href="@{/solicitudes/}"
-                                   data-th-classappend="${menuActive} == 'solicitudes' ? ' active' : ''" aria-current="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none" style="width: 40px; height: 40px;">
-                                    <path d="M33.3333 35.4167V39.5834H4.16667V35.4167C4.16667 35.4167 4.16667 27.0834 18.75 27.0834C33.3333 27.0834 33.3333 35.4167 33.3333 35.4167ZM26.0417 15.625C26.0417 14.1829 25.614 12.7731 24.8128 11.574C24.0116 10.3749 22.8728 9.4403 21.5404 8.88841C20.208 8.33652 18.7419 8.19212 17.3275 8.47347C15.913 8.75482 14.6138 9.44928 13.594 10.469C12.5743 11.4888 11.8798 12.7881 11.5984 14.2025C11.3171 15.6169 11.4615 17.083 12.0134 18.4154C12.5653 19.7478 13.4999 20.8866 14.699 21.6878C15.8981 22.489 17.3079 22.9167 18.75 22.9167C20.6839 22.9167 22.5385 22.1485 23.906 20.781C25.2734 19.4136 26.0417 17.5589 26.0417 15.625ZM33.2083 27.0834C34.4891 28.0745 35.537 29.3343 36.2785 30.774C37.02 32.2137 37.4369 33.7985 37.5 35.4167V39.5834H45.8333V35.4167C45.8333 35.4167 45.8333 27.8542 33.2083 27.0834ZM31.25 8.33336C29.816 8.32538 28.4136 8.7541 27.2292 9.56253C28.4947 11.3307 29.1751 13.4506 29.1751 15.625C29.1751 17.7994 28.4947 19.9193 27.2292 21.6875C28.4136 22.496 29.816 22.9247 31.25 22.9167C33.1839 22.9167 35.0385 22.1485 36.406 20.781C37.7734 19.4136 38.5417 17.5589 38.5417 15.625C38.5417 13.6912 37.7734 11.8365 36.406 10.469C35.0385 9.10159 33.1839 8.33336 31.25 8.33336Z" fill="white"/>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-th-href="@{/amigos/}"
-                                   data-th-classappend="${menuActive} == 'amigos' ? ' active' : ''" aria-current="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="58" viewBox="0 0 50 58" fill="none" style="width: 40px; height: 40px;">
-                                    <path d="M25 13.2916C26.9339 13.2916 28.7885 14.1828 30.156 15.769C31.5234 17.3553 32.2917 19.5067 32.2917 21.75C32.2917 23.9932 31.5234 26.1447 30.156 27.7309C28.7885 29.3172 26.9339 30.2083 25 30.2083C23.0661 30.2083 21.2115 29.3172 19.844 27.7309C18.4766 26.1447 17.7083 23.9932 17.7083 21.75C17.7083 19.5067 18.4766 17.3553 19.844 15.769C21.2115 14.1828 23.0661 13.2916 25 13.2916ZM10.4167 19.3333C11.5833 19.3333 12.6667 19.6958 13.6042 20.3483C13.2917 23.8041 14.1667 27.2358 15.9583 29.9183C14.9167 32.2383 12.8333 33.8333 10.4167 33.8333C8.75906 33.8333 7.16935 33.0695 5.99725 31.7098C4.82515 30.3502 4.16667 28.5061 4.16667 26.5833C4.16667 24.6605 4.82515 22.8164 5.99725 21.4568C7.16935 20.0971 8.75906 19.3333 10.4167 19.3333ZM39.5833 19.3333C41.2409 19.3333 42.8306 20.0971 44.0028 21.4568C45.1749 22.8164 45.8333 24.6605 45.8333 26.5833C45.8333 28.5061 45.1749 30.3502 44.0028 31.7098C42.8306 33.0695 41.2409 33.8333 39.5833 33.8333C37.1667 33.8333 35.0833 32.2383 34.0417 29.9183C35.8581 27.1981 36.7012 23.7708 36.3958 20.3483C37.3333 19.6958 38.4167 19.3333 39.5833 19.3333ZM11.4583 44.1041C11.4583 39.1016 17.5208 35.0416 25 35.0416C32.4792 35.0416 38.5417 39.1016 38.5417 44.1041V48.3333H11.4583V44.1041ZM0 48.3333V44.7083C0 41.3491 3.9375 38.5216 9.27083 37.7C8.04167 39.3433 7.29167 41.615 7.29167 44.1041V48.3333H0ZM50 48.3333H42.7083V44.1041C42.7083 41.615 41.9583 39.3433 40.7292 37.7C46.0625 38.5216 50 41.3491 50 44.7083V48.3333Z" fill="white"/>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li class="nav-item" data-sec-authorize="hasAnyRole('ROLE_ADMIN','ROLE_MAESTRO')">
-                                <a class="nav-link" data-th-href="@{/usuarios/}"
-                                   data-th-classappend="${menuActive} == 'usuarios' ? ' active' : ''" aria-current="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="63" height="60" viewBox="0 0 63 60" fill="none" style="width: 40px; height: 40px;">
-                                    <path d="M28.875 22.5C28.875 26.65 25.3575 30 21 30C16.6425 30 13.125 26.65 13.125 22.5C13.125 18.35 16.6425 15 21 15C25.3575 15 28.875 18.35 28.875 22.5ZM36.75 50H5.25V45C5.25 39.475 12.3113 35 21 35C29.6887 35 36.75 39.475 36.75 45M57.75 30V35H34.125V30M57.75 20V25H34.125V20M57.75 10V15H34.125V10H57.75Z" fill="white"/>
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul>
-                        <a class="btn me-2" data-bs-toggle="modal" data-bs-target="#modalPerfil" data-th-onclick="verPerfil([[${userSession.correo}]]);">
+                    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                        <div class="offcanvas-header">
                             <img class="img-perfil" data-th-src="@{'/img/' + ${userSession.foto}}" data-th-alt="${userSession.foto}">
-                        </a>
-                        <button class="btn position-relative me-4" id="solicitudesToast">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="32" viewBox="0 0 28 32" fill="none" style="width: 25px; height: 25px;">
-                            <path d="M28 25.9048V27.4286H0V25.9048L3.11111 22.8571V13.7143C3.11111 8.99048 6.26889 4.83048 10.8889 3.48952V3.04762C10.8889 2.23934 11.2167 1.46417 11.8001 0.892627C12.3836 0.321087 13.1749 0 14 0C14.8251 0 15.6164 0.321087 16.1999 0.892627C16.7833 1.46417 17.1111 2.23934 17.1111 3.04762V3.48952C21.7311 4.83048 24.8889 8.99048 24.8889 13.7143V22.8571L28 25.9048ZM17.1111 28.9524C17.1111 29.7607 16.7833 30.5358 16.1999 31.1074C15.6164 31.6789 14.8251 32 14 32C13.1749 32 12.3836 31.6789 11.8001 31.1074C11.2167 30.5358 10.8889 29.7607 10.8889 28.9524" fill="white"/>
-                            </svg>
-                            <span class="position-absolute top-0 start-75 translate-middle badge rounded-pill bg-danger"
-                                  data-th-if="${numSoli} > 0" data-th-text="${numSoli}"></span>
-                        </button>
-                        <form method="post" data-th-action="@{/logout}">
-                            <input class="d-flex btn btn-primary me-3" type="submit" value="Salir" />
-                        </form>
+                            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel" data-th-text="'Bienvenido: ' + ${userSession.nombres}"> </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li class="nav-item">
+                                    <a class="nav-link" data-th-href="@{/}"
+                                       data-th-classappend="${menuActive} == 'inicio' ? ' active' : ''" aria-current="true">
+                                        <h4>
+                                            <i class="fa-solid fa-house-user me-4"></i>Inicio
+                                        </h4>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-th-href="@{/perfil/editar}"
+                                       data-th-classappend="${menuActive} == 'perfil' ? ' active' : ''" aria-current="true">
+                                        <h4>
+                                            <i class="fa-solid fa-user-gear me-4"></i> Perfil
+                                        </h4>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-th-href="@{/solicitudes/}"
+                                       data-th-classappend="${menuActive} == 'solicitudes' ? ' active' : ''" aria-current="true">
+                                        <h4>
+                                            <i class="fa-solid fa-user-plus me-4"></i>Agregar / Aceptar
+                                        </h4>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-th-href="@{/amigos/}"
+                                       data-th-classappend="${menuActive} == 'amigos' ? ' active' : ''" aria-current="true">
+                                        <h4>
+                                            <i class="fa-solid fa-users me-4"></i> Mis amigos
+                                        </h4>
+                                    </a>
+                                </li>
+                                <li class="nav-item" data-sec-authorize="hasAnyRole('ROLE_ADMIN')">
+                                    <a class="nav-link" data-th-href="@{/usuarios/}"
+                                       data-th-classappend="${menuActive} == 'usuarios' ? ' active' : ''" aria-current="true">
+                                        <h4>
+                                            <i class="fa-solid fa-users-gear me-4"></i> Usuarios
+                                        </h4>
+                                    </a>
+                                </li>
+
+                                <form method="post" data-th-action="@{/logout}">
+                                    <div class="d-grid gap-2 mb-3">
+                                        <input type="submit" value="Cerrar sesion" class="btn  btn-block btn-danger">
+                                    </div>
+                                </form>
+
+                            </ul>
+
+                        </div>
                     </div>
                 </div>
             </nav>
         </div>
 
-
-
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-        <script src="/js/perfil.js"></script>
-    </body>
-</html>

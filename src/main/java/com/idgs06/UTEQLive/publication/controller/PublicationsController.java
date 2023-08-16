@@ -70,7 +70,7 @@ public class PublicationsController {
         publication.setUser(user);
         model.addAttribute("menuActive", "inicio");
         model.addAttribute("operacion", "agregar");
-        model.addAttribute("tituloOper", "Agregar nueva publicación");
+        model.addAttribute("tituloOper", "Nueva publicación");
         model.addAttribute("textBtn", "Publicar");
         model.addAttribute("publication", publication);
         return "publications/formPublicacion";
