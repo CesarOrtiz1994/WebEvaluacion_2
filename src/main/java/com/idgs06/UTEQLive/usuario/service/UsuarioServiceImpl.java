@@ -126,6 +126,55 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
+    @Transactional
+    public Usuario saveEdit(Usuario usuario, String rolUser) {
+        List<Rol> roles = rolRepo.findAllByCorreo(usuario.getCorreo());
+        if (roles.isEmpty()) {
+            Rol rol = new Rol();
+            rol.setAuthority("ROLE_ESTUDIANTE");
+            rol.setCorreo(usuario.getCorreo());
+            roles.add(rol);
+            if (rolUser.equals("Maestro")) {
+                Rol rolMaestr = new Rol();
+                rolMaestr.setAuthority("ROLE_MAESTRO");
+                rolMaestr.setCorreo(usuario.getCorreo());
+                roles.add(rolMaestr);
+            }
+        } else {
+            Rol admin = new Rol();
+            admin.setAuthority("ROLE_ADMIN");
+            Rol maestro = new Rol();
+            maestro.setAuthority("ROLE_MAESTRO");
+            if (!roles.contains(admin)) {
+                if (roles.contains(maestro)) {
+                    Rol maestroAnt = null;
+                    for (Rol role : roles) {
+                        if (role.equals(maestro) && "Estudiante".equals(rolUser)) {
+                            maestroAnt = role;
+                            break;
+                        }
+                    }
+                    if(maestroAnt != null) {
+                        roles.remove(maestroAnt);
+                    }
+                } else if ("Maestro".equals(rolUser)) {
+                    Rol rolMaestr = new Rol();
+                    rolMaestr.setAuthority("ROLE_MAESTRO");
+                    rolMaestr.setCorreo(usuario.getCorreo());
+                    roles.add(rolMaestr);
+                }
+            }
+        }
+
+        usuario.setAuthorities(roles);
+
+        usuario.setPassword(WebSecurityConfig.passwordEncoder().encode(usuario.getPassword()));
+        usuario.setEnabled(true);
+
+        return repo.save(usuario);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<Usuario> findAllByNombre(String nombre) {
         List<Usuario> response = new ArrayList<>();

@@ -49,15 +49,16 @@ async function verPerfil(correo) {
                 document.getElementById('fechaNac').value = perfil.fechaNac;
                 document.getElementById('carrera').value = perfil.carrera;
                 document.getElementById('prepa').value = perfil.prepa;
-                if (perfil.trabaja === "Si") {
+                document.getElementById('trabaja').value = perfil.trabaja;
+/*                if (perfil.trabaja === "Si") {
                     document.getElementById('trabaja').innerHTML = `${perfil.trabaja}<br />
                             <strong class="me-auto">Empresa o lugar de trabajo:</strong>
                             <small>${perfil.empresa}</small>`;
                 } else {
                     document.getElementById('trabaja').innerHTML = perfil.trabaja;
-                }
+                }*/
                 document.getElementById('lugarNac').innerHTML = perfil.lugarNac;
-                document.getElementById('sitSentimental').innerHTML = perfil.sitSentimental;
+                document.getElementById('sitSentimental').value = perfil.sitSentimental;
                 document.getElementById('gustos').value = perfil.gustos;
 
                 if (perfil.correo == correo) {

@@ -13,6 +13,7 @@ public interface IUsuarioService {
     void delete(String correo, String foto);
     Usuario saveNewPass(Usuario usuario);
     Usuario save(Usuario usuario, MultipartFile imageFoto, String rolUser);
+    Usuario saveEdit(Usuario usuario, String rolUser);
     List<Usuario> findAllByNombre(String nombre);
 
 }

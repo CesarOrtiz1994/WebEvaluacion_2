@@ -193,8 +193,6 @@ public class PublicationsController {
     @PostMapping("/perfil/guardar")
     public String guardarUsuario(Model model, @Valid Usuario usuario, BindingResult results,
             @RequestParam("operacion") String operacion) {
-        MultipartFile imageFoto = null;
-        List<MultipartFile> files = new ArrayList<>();
 /*        files.add(imageFoto);
         if (!FilesUtils.validaExtensionesImagenes(files)) {
             results.rejectValue("foto", "error.foto", "Solo se permiten extensiones .JPG, .JPEG y .PNG");
@@ -206,6 +204,7 @@ public class PublicationsController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = userService.findByCorreo(authentication.getName());
+
         System.out.println("user = " + user.toString());
         if(!usuario.isEnabled()) {
             usuario.setEnabled(true);
@@ -265,7 +264,7 @@ public class PublicationsController {
                     break;
             }
         }
-        userService.save(usuario, imageFoto, rolUser);
+        userService.saveEdit(usuario, rolUser);
         return "redirect:/";
     }
 
