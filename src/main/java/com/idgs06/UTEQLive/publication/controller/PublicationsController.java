@@ -192,19 +192,30 @@ public class PublicationsController {
 
     @PostMapping("/perfil/guardar")
     public String guardarUsuario(Model model, @Valid Usuario usuario, BindingResult results,
-            @RequestParam("operacion") String operacion, @RequestParam("imageFoto") MultipartFile imageFoto) {
+            @RequestParam("operacion") String operacion) {
+        MultipartFile imageFoto = null;
         List<MultipartFile> files = new ArrayList<>();
-        files.add(imageFoto);
+/*        files.add(imageFoto);
         if (!FilesUtils.validaExtensionesImagenes(files)) {
             results.rejectValue("foto", "error.foto", "Solo se permiten extensiones .JPG, .JPEG y .PNG");
-        }
+        }*/
+        System.out.println(usuario.toString());
         if (!FechasUtils.esMenorDe18(usuario.getFechaNac())) {
             results.rejectValue("fechaNac", "error.fechaNac", "Fecha de nacimiento invalida.");
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = userService.findByCorreo(authentication.getName());
+        System.out.println("user = " + user.toString());
+        if(!usuario.isEnabled()) {
+            usuario.setEnabled(true);
+        }
+        
+        if (usuario.getPassword().equals("")) {
+            usuario.setPassword(user.getPassword());
+        }
         if (results.hasErrors()) {
+            System.out.println("Error: " + results.getAllErrors());
             model.addAttribute("tituloOper", "Editar perfil");
             model.addAttribute("textBtn", "Guardar");
             model.addAttribute("userSession", user);

@@ -18,8 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 @Slf4j
 public class FilesUtils {
-
-    private final Path rootFolderPublics = Paths.get("src//main//resources//static//img//publics");
+    private final Path rootFolderPublics = Paths.get("src/main/resources/static/img/publicaciones");
     private static final Path rootFolderPerfil = Paths.get("src//main//resources//static//img//perfil");
 
     public static String saveImgPerfil(MultipartFile file, String nombre) throws Exception {
@@ -52,7 +51,7 @@ public class FilesUtils {
         Path pathFinal = rootFolderPublics.resolve(newFilename);
         Files.copy(file.getInputStream(), pathFinal);
         Imagen imagen = new Imagen();
-        imagen.setRuta("publics/" + newFilename);
+        imagen.setRuta("publicaciones/" + newFilename);
         return imagen;
     }
 

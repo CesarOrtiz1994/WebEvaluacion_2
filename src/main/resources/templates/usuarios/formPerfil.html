@@ -22,63 +22,95 @@
 
             <div class="container text-center">
                 <div class="card">
-                    <form data-th-action="@{/perfil/guardarphoto}" data-th-object="${usuario}" method="POST" enctype="multipart/form-data" id="postFotoForm">
-                        <!-- Photo and names section -->
-                        <div class="row g-3 align-items-center">
-                            <div class="col-5 p-5">
-                                <!-- Profile image -->
-                                <img class="img-ver-perfil me-2" id='perf-foto'>
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" for="imageFoto"><i class="fa-regular fa-image"></i></label>
-                                    <input type="file" class="form-control" name="imageFoto" id="imageFoto" accept=".png,.jpg,.jpeg">
-                                </div>
-                                <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+                    <!-- Photo and names section -->
+                    <div class="row g-3 align-items-center">
+                        <form data-th-action="@{/perfil/guardarphoto}" data-th-object="${usuario}" method="POST" enctype="multipart/form-data" id="postFotoForm" class="col-5 p-5">
+                            <!-- Profile image -->
+                            <img class="img-ver-perfil me-2" id="perf-foto">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="imageFoto"><i class="fa-regular fa-image"></i></label>
+                                <input type="file" class="form-control" name="imageFoto" id="imageFoto" accept=".png,.jpg,.jpeg">
                             </div>
-                        </div>
-                    </form>
-                    <form>
-                        <div class="row">
-                            <div class="col-5 p-5 border-end">
-                                <img class="img-ver-perfil me-2" id='perf-foto1'>
-
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" for="imageFoto1"><i class="fa-regular fa-image"></i></label>
-                                    <input type="file" class="form-control" name="imageFoto" id="imageFoto1" accept=".png,.jpg,.jpeg">
-                                </div>
-
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-                                    <input type="text" id='nombres' class="form-control" placeholder="Nombre" aria-label="Nombres" aria-describedby="basic-addon1">
-                                </div>
-
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-                                    <input type="text" id='apellidos' class="form-control" placeholder="Apellidos" aria-label="Apellidos" aria-describedby="basic-addon1">
-                                </div>
-
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
-                                    <input type="text" id='correo' class="form-control" placeholder="correo" aria-label="Correo" aria-describedby="basic-addon1">
-                                </div>
+                            <button class="btn btn-primary" type="submit">Cambiar imagen</button>
+                        </form>
+                        <form class="col-7 p-5 border-start" data-th-action="@{/perfil/guardar}"
+                              data-th-object="${usuario}" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="operacion" name="operacion" data-th-value="${operacion}" />
+                            <h5>Datos de cuenta</h5>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                <input type="text" data-th-field="*{nombres}" id="nombres" class="form-control" placeholder="Nombre" aria-label="Nombres" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                <input type="text" data-th-field="*{apellidos}" id="apellidos" class="form-control" placeholder="Apellidos" aria-label="Apellidos" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                                <input type="text" data-th-field="*{correo}" id="correo" class="form-control" placeholder="Correo" aria-label="Correo" aria-describedby="basic-addon1">
                             </div>
 
-                            <div class="col-7">.col-6<br>Subsequen columns continue along the new line.
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
-                                    <input type="text" id='fechaNac' class="form-control" placeholder="fechaNac" aria-label="fechaNac" aria-describedby="basic-addon1">
-                                </div>
+                            <br>
+
+                            <h5>Información personal</h5>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                                <input type="date" data-th-field="*{fechaNac}" id='fechaNac' class="form-control" aria-label="fechaNac" aria-describedby="basic-addon1">
                             </div>
-                        </div>
-                    </form>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-graduation-cap"></i></span>
+                                <input type="text" data-th-field="*{carrera}" id='carrera' class="form-control" placeholder="Escribe tu carrera" aria-label="fechaNac" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-school"></i></span>
+                                <input type="text" data-th-field="*{prepa}" id='prepa' class="form-control" placeholder="Escribe tu preparatoria" aria-label="fechaNac" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
+                                <select class="form-select form-control" aria-label="visibilidad"
+                                        data-th-field="*{trabaja}" id="trabaja" name="trabaja">
+                                    <option value="" selected="" disabled>Selecciona una opción</option>
+                                    <option value="Si">Si</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
+                                <input type="text" data-th-field="*{empresa}" id='empresa' class="form-control" placeholder="Escribe tu lugar de trabajo" aria-label="empresa" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
+                                <input type="text" data-th-field="*{lugarNac}" class="form-control" id="lugarNac" placeholder="Lugar de nacimiento" aria-label="lugar nacimiento" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-heart"></i></span>
+                                <select class="form-select form-control" aria-label="sitSentimental"
+                                        data-th-field="*{sitSentimental}" id="sitSentimental" name="sitSentimental">
+                                    <option value="" selected="">Selecciona una opción</option>
+                                    <option value="Soltero">Soltero</option>
+                                    <option value="Casado">Casado</option>
+                                    <option value="Divorciado">Divorciado</option>
+                                    <option value="Viudo">Viudo</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-thumbs-up"></i></span>
+                                <textarea type="text" data-th-field="*{gustos}" class="form-control" id="gustos" placeholder="Describe tus gustos" aria-label="gustos" aria-describedby="basic-addon1"></textarea>
+                            </div>
+                            <!--boton-->
+                            <div class="col-auto">
+                                <button class="btn btn-primary" type="submit" data-th-text="${textBtn}">...</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-
 
             <div class="me-5 ms-5">
                 <div class="card card-body">
                     <form data-th-action="@{/perfil/guardar}"
                           data-th-object="${usuario}" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" id="operacion" name="operacion" data-th-value="${operacion}" />
+                        <input type="hidden" id="operacion1" name="operacion" data-th-value="${operacion}" />
                         <input type="hidden" id="foto" name="foto" data-th-field="*{foto}" />
                         <div class="row g-3 align-items-center">
                             <div class="col-sm-4">
@@ -87,7 +119,7 @@
                                     <label for="foto" class="col-form-label">Foto de perfil</label>
                                 </div>
                                 <div class="col-auto">
-                                    <input class="form-control" type="file" name="imageFoto" id="imageFoto" accept=".png,.jpg,.jpeg">
+                                    <input class="form-control" type="file" name="imageFoto1" id="imageFoto1" accept=".png,.jpg,.jpeg">
                                 </div>
                                 <div class="col-auto">
                                     <span id="nombreHelpInline" class="form-text text-danger-emphasis" data-th-if="#{fields.hasErrors('foto')}"
@@ -125,7 +157,7 @@
                             <div class="col-sm-4">
                                 <!--correo-->
                                 <div class="col-auto">
-                                    <label for="correo" class="col-form-label">* Correo</label>
+                                    <label for="correo1" class="col-form-label">* Correo</label>
                                 </div>
                                 <div class="col-auto">
                                     <input type="text" id="correo1" class="form-control"
@@ -153,7 +185,7 @@
                             <div class="col-sm-4">
                                 <!--fecha de nacimiento-->
                                 <div class="col-auto">
-                                    <label for="fechaNac" class="form-label">* Fecha de nacimiento</label>
+                                    <label for="fechaNac1" class="form-label">* Fecha de nacimiento</label>
                                 </div>
                                 <div class="col-auto">
                                     <input type="date" class="form-control" id="fechaNac1" data-th-max="${#temporals.format(#temporals.createNow().minusYears(18),'yyyy-MM-dd')}"
@@ -201,10 +233,10 @@
                             <div class="col-sm-4">
                                 <!--Carrera-->
                                 <div class="col-auto">
-                                    <label for="carrera" class="form-label">Carrera</label>
+                                    <label for="carrera1" class="form-label">Carrera</label>
                                 </div>
                                 <div class="col-auto">
-                                    <input type="text" class="form-control" id="carrera" placeholder="Carrera"
+                                    <input type="text" class="form-control" id="carrera1" placeholder="Carrera"
                                            aria-labelledby="carreraHelpInline" data-th-field="*{carrera}">
                                 </div>
                                 <div class="col-auto">
@@ -215,10 +247,10 @@
                             <div class="col-sm-4">
                                 <!--prepa-->
                                 <div class="col-auto">
-                                    <label for="prepa" class="form-label">Preparatoria cursada</label>
+                                    <label for="prepa1" class="form-label">Preparatoria cursada</label>
                                 </div>
                                 <div class="col-auto">
-                                    <input type="text" class="form-control" id="prepa" placeholder="Preparatoria cursada"
+                                    <input type="text" class="form-control" id="prepa1" placeholder="Preparatoria cursada"
                                            aria-labelledby="prepaHelpInline" data-th-field="*{prepa}">
                                 </div>
                                 <div class="col-auto">
@@ -229,11 +261,11 @@
                             <div class="col-sm-4">
                                 <!--trabaja-->
                                 <div class="col-auto">
-                                    <label for="trabaja" class="form-label">¿Trabaja?</label>
+                                    <label for="trabaja1" class="form-label">¿Trabaja?</label>
                                 </div>
                                 <div class="col-auto">
                                     <select class="form-select form-control" aria-label="visibilidad"
-                                            id="trabaja" name="trabaja" data-th-field="*{trabaja}">
+                                            id="trabaja1" name="trabaja" data-th-field="*{trabaja}">
                                         <option value="" selected="">Selecciona una opción</option>
                                         <option value="Si">Si</option>
                                         <option value="No">No</option>
@@ -247,10 +279,10 @@
                             <div class="col-sm-4">
                                 <!--empresa-->
                                 <div class="col-auto">
-                                    <label for="empresa" class="form-label">Empresa o lugar de trabajo</label>
+                                    <label for="empresa1" class="form-label">Empresa o lugar de trabajo</label>
                                 </div>
                                 <div class="col-auto">
-                                    <input type="text" class="form-control" id="empresa" placeholder="Empresa o lugar de trabajo"
+                                    <input type="text" class="form-control" id="empresa1" placeholder="Empresa o lugar de trabajo"
                                            aria-labelledby="empresaHelpInline" data-th-field="*{empresa}">
                                 </div>
                                 <div class="col-auto">
@@ -261,10 +293,10 @@
                             <div class="col-sm-4">
                                 <!--lugarNac-->
                                 <div class="col-auto">
-                                    <label for="lugarNac" class="form-label">Lugar de nacimiento</label>
+                                    <label for="lugarNac1" class="form-label">Lugar de nacimiento</label>
                                 </div>
                                 <div class="col-auto">
-                                    <input type="text" class="form-control" id="lugarNac" placeholder="Lugar de nacimiento"
+                                    <input type="text" class="form-control" id="lugarNac1" placeholder="Lugar de nacimiento"
                                            aria-labelledby="lugarNacHelpInline" data-th-field="*{lugarNac}">
                                 </div>
                                 <div class="col-auto">
@@ -275,11 +307,11 @@
                             <div class="col-sm-4">
                                 <!--sitSentimental-->
                                 <div class="col-auto">
-                                    <label for="sitSentimental" class="form-label">Situación sentimental</label>
+                                    <label for="sitSentimental1" class="form-label">Situación sentimental</label>
                                 </div>
                                 <div class="col-auto">
                                     <select class="form-select form-control" aria-label="sitSentimental"
-                                            id="sitSentimental" name="sitSentimental" data-th-field="*{sitSentimental}">
+                                            id="sitSentimental1" name="sitSentimental1" data-th-field="*{sitSentimental}">
                                         <option value="" selected="">Selecciona una opción</option>
                                         <option value="Soltero">Soltero</option>
                                         <option value="Casado">Casado</option>
@@ -295,10 +327,10 @@
                             <div class="col-sm-8">
                                 <!--gustos-->
                                 <div class="col-auto">
-                                    <label for="gustos" class="form-label">Gustos</label>
+                                    <label for="gustos1" class="form-label">Gustos</label>
                                 </div>
                                 <div class="col-auto">
-                                    <textarea class="form-control" id="gustos" placeholder="Gustos..."
+                                    <textarea class="form-control" id="gustos1" placeholder="Gustos..."
                                               aria-labelledby="gustosHelpInline" data-th-field="*{gustos}"></textarea>
                                 </div>
                                 <div class="col-auto">

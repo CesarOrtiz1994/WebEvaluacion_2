@@ -42,23 +42,23 @@ async function verPerfil(correo) {
             .then((perfil) => {
                 let imagen = document.getElementById('perf-foto');
                 imagen.src = '/img/' + perfil.foto;
-                imagen.alt = '/img/' + perfil.foto;
+                imagen.alt = perfil.foto;
                 document.getElementById('nombres').value = perfil.nombres;
                 document.getElementById('apellidos').value = perfil.apellidos;
                 document.getElementById('correo').value = perfil.correo;
                 document.getElementById('fechaNac').innerHTML = perfil.fechaNac;
-                document.getElementById('perf-carrera').innerHTML = perfil.carrera;
-                document.getElementById('perf-prepa').innerHTML = perfil.prepa;
+                document.getElementById('carrera').innerHTML = perfil.carrera;
+                document.getElementById('prepa').innerHTML = perfil.prepa;
                 if (perfil.trabaja === "Si") {
-                    document.getElementById('perf-trabaja').innerHTML = `${perfil.trabaja}<br />
+                    document.getElementById('trabaja').innerHTML = `${perfil.trabaja}<br />
                             <strong class="me-auto">Empresa o lugar de trabajo:</strong>
                             <small>${perfil.empresa}</small>`;
                 } else {
-                    document.getElementById('perf-trabaja').innerHTML = perfil.trabaja;
+                    document.getElementById('trabaja').innerHTML = perfil.trabaja;
                 }
-                document.getElementById('perf-lugarNac').innerHTML = perfil.lugarNac;
-                document.getElementById('perf-sitSentimental').innerHTML = perfil.sitSentimental;
-                document.getElementById('perf-gustos').innerHTML = perfil.gustos;
+                document.getElementById('lugarNac').innerHTML = perfil.lugarNac;
+                document.getElementById('sitSentimental').innerHTML = perfil.sitSentimental;
+                document.getElementById('gustos').innerHTML = perfil.gustos;
 
                 if (perfil.correo == correo) {
                     footerModal.innerHTML = `<a class="btn btn-outline-primary" href="/perfil/editar">Editar</a>
