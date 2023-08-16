@@ -7,7 +7,10 @@ import com.idgs06.UTEQLive.friends.service.ISolicitudesService;
 import com.idgs06.UTEQLive.usuario.entity.Usuario;
 import com.idgs06.UTEQLive.usuario.service.IUsuarioService;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -35,13 +38,22 @@ public class SolicitudesController {
     public String pageSolicitudes(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = usuServ.findByCorreo(authentication.getName());
+        List<Usuario> users = usuServ.findAll();
         model.addAttribute("userSession", user);
         List<Solicitudes> listSoli = solServ.solicitudesRecibidas(authentication.getName());
+        List<Solicitudes> listEnvi = solServ.solicitudesEnviadas(user);
+        Map<String, Boolean> solicitudEnviadaMap = new HashMap<>();
+
+        for (Solicitudes solicitud : listEnvi) {
+            solicitudEnviadaMap.put(solicitud.getUserRecibe(), true);
+        }
+
         model.addAttribute("numSoli", listSoli.size());
         model.addAttribute("notificaciones", listSoli);
         model.addAttribute("menuActive", "solicitudes");
         model.addAttribute("solicitudes", listSoli);
-        model.addAttribute("usuarios", new ArrayList<>() );
+        model.addAttribute("solicitudEnviadaMap", solicitudEnviadaMap);
+        model.addAttribute("usuarios", users );
         return "friends/solicitudes";
     }
     
@@ -51,12 +63,20 @@ public class SolicitudesController {
         Usuario user = usuServ.findByCorreo(authentication.getName());
         model.addAttribute("userSession", user);
         List<Solicitudes> listSoli = solServ.solicitudesRecibidas(authentication.getName());
+        List<Solicitudes> listEnvi = solServ.solicitudesEnviadas(user);
+        Map<String, Boolean> solicitudEnviadaMap = new HashMap<>();
+
+        for (Solicitudes solicitud : listEnvi) {
+            solicitudEnviadaMap.put(solicitud.getUserRecibe(), true);
+        }
         model.addAttribute("numSoli", listSoli.size());
         model.addAttribute("notificaciones", listSoli);
         model.addAttribute("menuActive", "solicitudes");
         model.addAttribute("solicitudes", listSoli);
+        model.addAttribute("solicitudEnviadaMap", solicitudEnviadaMap);
         model.addAttribute("usuarios", usuServ.findAllByNombre(nombre) );
-        return "friends/solicitudes";
+        model.addAttribute("nombre", nombre);
+        return "friends/busqueda_users";
     }
     
     @PostMapping("/rechazar")

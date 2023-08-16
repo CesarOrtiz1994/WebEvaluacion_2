@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 public class SolicitudesServiceImpl implements ISolicitudesService{
-    
+
     @Autowired
     private ISolicitudesRepository repo;
     @Autowired
@@ -27,6 +27,12 @@ public class SolicitudesServiceImpl implements ISolicitudesService{
         return repo.findAllByUserRecibe(userRecibe);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<Solicitudes> solicitudesEnviadas(Usuario userEnvia) {
+        return repo.findAllByUserEnvia(userEnvia);
+    }
+    
     @Override
     @Transactional
     public Solicitudes save(Solicitudes solicitud) {

@@ -1,0 +1,31 @@
+<div class="row align-items-center">
+    <div class="col-5 mx-2" data-th-each="usu : ${usuarios}">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <img class="img-perfil me-3" data-th-src="@{'/img/' + ${usu.foto}}" data-th-alt="${usu.foto}">
+                    <div class="col">
+                        <h5 class="card-title m-0" data-th-text="${usu.nombres} + ' ' + ${usu.apellidos}"></h5>
+                        <span class="badge bg-primary m-0" data-th-text="${usu.correo}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <form data-th-action="@{/solicitudes/mandar-solicitud}" method="post">
+                    <input type="hidden" id="userRecibe" name="userRecibe" data-th-value="${usu.correo}" />
+                    <button class="btn btn-outline-success" disabled="true" th:if="${solicitudEnviadaMap[usu.correo] != null && solicitudEnviadaMap[usu.correo]}">
+                        Solicitud enviada
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <button class="btn btn-outline-primary" th:if="${solicitudEnviadaMap[usu.correo] == null || !solicitudEnviadaMap[usu.correo]}">
+                        Enviar solicitud
+                        <i class="fa-solid fa-user-plus"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div data-th-if="${usuarios.size() == 0}">
+    <h5 class="text-center" data-th-text="'Ningún resultado coincide con ' + ${nombre} + ' :('"></h5>
+</div>
